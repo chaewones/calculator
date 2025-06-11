@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Custom Calculator</title>
+    <style>
+        body {
+            background-color: #e0bbff; /* 연보라색 배경 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .calculator {
+            background-color: #c299ff; /* 계산기 본체 보라색 */
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            width: 300px;
+        }
+
+        .display {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 24px;
+            text-align: right;
+            margin-bottom: 20px;
+            height: 50px;
+            overflow-x: auto;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .button {
+            background-color: #a06cd5;
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 18px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #8a4fcf;
+        }
+
+        .button.equal {
+            grid-column: span 2;
+            background-color: #6c2dc7;
+        }
+
+        .button.equal:hover {
+            background-color: #5a21b0;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button class="button" onclick="clearDisplay()">C</button>
+            <button class="button" onclick="appendValue('+/-')">+/-</button>
+            <button class="button" onclick="appendValue('%')">%</button>
+            <button class="button" onclick="appendValue('/')">/</button>
+
+            <button class="button" onclick="appendValue('7')">7</button>
+            <button class="button" onclick="appendValue('8')">8</button>
+            <button class="button" onclick="appendValue('9')">9</button>
+            <button class="button" onclick="appendValue('*')">*</button>
+
+            <button class="button" onclick="appendValue('4')">4</button>
+            <button class="button" onclick="appendValue('5')">5</button>
+            <button class="button" onclick="appendValue('6')">6</button>
+            <button class="button" onclick="appendValue('-')">-</button>
+
+            <button class="button" onclick="appendValue('1')">1</button>
+            <button class="button" onclick="appendValue('2')">2</button>
+            <button class="button" onclick="appendValue('3')">3</button>
+            <button class="button" onclick="appendValue('+')">+</button>
+
+            <button class="button" onclick="appendValue('0')">0</button>
+            <button class="button" onclick="appendValue('.')">.</button>
+            <button class="button equal" onclick="calculate()">=</button>
+        </div>
+    </div>
+
+    <script>
+        let display = document.getElementById('display');
+        let currentInput = '';
+
+        function appendValue(value) {
+            if (value === '+/-') {
+                currentInput = (parseFloat(currentInput) * -1).toString();
+            } else if (value === '%') {
+                currentInput = (parseFloat(currentInput) / 100).toString();
+            } else {
+                currentInput += value;
+            }
+            updateDisplay();
+        }
+
+        function clearDisplay() {
+            currentInput = '';
+            updateDisplay();
+        }
+
+        function calculate() {
+            try {
+                currentInput = eval(currentInput).toString();
+            } catch {
+                currentInput = 'Error';
+            }
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            display.textContent = currentInput || '0';
+        }
+    </script>
+</body>
+</html>
